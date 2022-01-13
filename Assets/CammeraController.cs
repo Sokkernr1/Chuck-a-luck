@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
@@ -11,6 +12,8 @@ public class CammeraController : MonoBehaviour
     [SerializeField]private TextMeshPro badWizardText;
     [SerializeField]private List<string> goodWizardQuotes = new List<string>();
     [SerializeField]private List<string> badWizardQuotes = new List<string>();
+    [SerializeField]private Button betBtn;
+    [SerializeField]private Canvas gameOverCanvas;
 
     private int betOn1 = 0;
     private int betOn2 = 0;
@@ -66,9 +69,6 @@ public class CammeraController : MonoBehaviour
                         betOn6++;
                         wallet--;
                         Instantiate(coinPrefab,coinPos,Quaternion.identity,GameObject.Find("Coins").transform);
-                        break;
-                    default:
-                        Debug.Log("<color=red>No valid field</color>");
                         break;
                 }
                 walletText.text = "Your wallet: " + wallet + " coins";
@@ -127,7 +127,10 @@ public class CammeraController : MonoBehaviour
 
             if(wallet <= 0){
                 goodWizardText.text = "NOOOOOOOOO!";
-                badWizardText.text = "YOU LOSER! MUAHAHAHA All the water will be mine";
+                badWizardText.text = "YOU LOSER! MUAHAHA All the water will be mine";
+                StopAllCoroutines();
+                gameOverCanvas.gameObject.SetActive(true);
+                betBtn.interactable = false;
             }
         } else {
             goodWizardText.text = "You have to bet moron...";
